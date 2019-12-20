@@ -193,6 +193,7 @@ class dataset:
     fields=self.fields
     dat = data.TabularDataset(path=path, format='tsv',fields=fields)
     dat.fields["rawent"] = data.RawField()
+    dat.fields["rawent"].is_target = False
     for x in dat:
       x.rawent = x.ent.split(" ; ")
       x.rawent = (x.rawent, [[self.OUTP.vocab.stoi[y] if y in self.OUTP.vocab.stoi else 0 for y in z.split(" ")] for z in x.rawent])
