@@ -181,7 +181,8 @@ class dataset:
       ds.fields["tgt"] = self.TGT
       ds.fields["rawent"] = data.RawField()
       ds.fields["sordertgt"] = data.RawField()
-
+      ds.fields["rawent"].is_target=False
+      ds.fields["sordertgt"].is_target=False
 
     self.t1_iter = data.Iterator(t1d,args.t1size,device=args.device,sort_key=lambda x:len(x.out),repeat=False,train=True)
     self.t2_iter = data.Iterator(t2d,args.t2size,device=args.device,sort_key=lambda x:len(x.out),repeat=False,train=True)
