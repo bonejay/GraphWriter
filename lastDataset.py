@@ -77,6 +77,7 @@ class dataset:
     self.NERD = data.Field(sequential=True, batch_first=True,eos_token="<eos>")
     self.ENT = data.RawField()
     self.REL = data.RawField()
+
     self.SORDER = data.RawField()
     self.SORDER.is_target = False
     self.REL.is_target = False 
@@ -192,7 +193,7 @@ class dataset:
     fields=self.fields
     ds = data.TabularDataset(path=path, format='tsv',fields=fields)
     ds.fields["rawent"] = data.RawField()
-    ds.fields["rawent"].is_target=false
+    ds.fields["rawent"].is_target=False
     for x in ds:
       x.rawent = x.ent.split(" ; ")
       x.ent = self.vec_ents(x.ent,self.ENT)
@@ -205,10 +206,10 @@ class dataset:
       x.sorder = [[int(z) for z in y.strip().split(" ")] for y in x.sorder.split("-1")[:-1]]
     ds.fields["tgt"] = self.TGT
     ds.fields["rawent"] = data.RawField()
-    ds.fields["rawent"].is_target=false
+    ds.fields["rawent"].is_target=False
 
     ds.fields["sordertgt"] = data.RawField()
-    ds.fields["sordertgt"].is_target=false
+    ds.fields["sordertgt"].is_target=False
 
     dat_iter = data.Iterator(ds,1,device=args.device,sort_key=lambda x:len(x.src), train=False, sort=False)
     return dat_iter
